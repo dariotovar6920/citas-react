@@ -1,9 +1,9 @@
 function Header(){
 
     return(
-        <>
-            <h1>Desde Header Componente</h1>
-        </>
+        <header className="grid">
+            <h1 className="uppercase">Desde Header Componente</h1>
+        </header>
     )
 }
 
