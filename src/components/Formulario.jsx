@@ -1,17 +1,48 @@
 import {useState, useEffect} from 'react';
+import Error from './Error'
 
-const Formulario = () => {
+const Formulario = ({pacientes,setPacientes }) => {
 
   const [nombre, setNombre] = useState(''); 
   const [propietario, setPropietario] = useState(''); 
   const [email, setEmail] = useState(''); 
   const [fecha, setFecha] = useState(''); 
   const [sintoma, setSintoma] = useState(''); 
+  const [error, setError] = useState(false);
   
   const handleSubmit = (e) =>{
     e.preventDefault();
-    console.log('enviando el formulario');
-  }
+    
+    //validación del formulario
+    if([nombre, propietario, email, fecha, sintoma].includes('')){
+        console.log('hay al menos un campo vacío')
+
+        setError(true);
+        return;
+    }
+
+    setError(false);
+
+    //objeto de paciente
+    const objetoPaciente = {
+        nombre,
+        propietario,
+        email,
+        fecha,
+        sintoma
+    }
+
+    setPacientes([...pacientes, objetoPaciente]);
+
+    //reiniciar el formulario
+    setNombre('');
+    setPropietario('');
+    setEmail('');
+    setFecha('');
+    setSintoma('');
+
+    }
+
 
   return (
     <div className="md:w-1/2 lg:w-2/5 m-5">
@@ -26,6 +57,7 @@ const Formulario = () => {
          onSubmit={handleSubmit} 
          className="bg-white shadow-md rounded-lg py-10 px-5 mb-10"
          >
+            {error && <Error  mensaje= "Todo los campos son obligatorios"/>}
         <div className="mb-5">
             <label htmlFor="mascota" className="block text-gray-700 uppercase">Nombre Mascota</label>
             <input 
@@ -44,7 +76,7 @@ const Formulario = () => {
                 id="propietario"
                 type="text" 
                 placeholder="Nombre del propietario"
-                className="border-2 w-full p-2 mt-2 placeholder-gray-400 roundex-md"
+                className="border-2 w-full p-2 mt-2 placeholder-gray-400 roundex-md uppercase"
                 value={propietario}
                 onChange={ (e) => setPropietario(e.target.value) }
             /> 
@@ -74,11 +106,11 @@ const Formulario = () => {
         </div>
 
         <div className="mb-5">
-            <label htmlFor="sintomas" className="block text-gray-700 uppercase ">Síntomas</label>
+            <label htmlFor="sintomas" className="block text-gray-700 uppercase">Síntomas</label>
 
             <textarea 
                  id="sintomas" 
-                 className="border-2 w-full p-2 mt-2 placeholder-gray-400 roundex-md"
+                 className="border-2 w-full p-2 mt-2 placeholder-gray-400 roundex-md uppercase"
                  placeholder="Describe los síntomas"
                  value={sintoma}
                  onChange={ (e) => setSintoma(e.target.value) }
