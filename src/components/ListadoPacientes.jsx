@@ -1,36 +1,37 @@
 import Paciente from "./Paciente"
 
-const ListadoPacientes = () => {
+const ListadoPacientes = ({pacientes, setPaciente}) => {
+
   return (
     <div className="md:w-1/2 lg:w-3/5 md-h-screen overflow-y-scroll">
-        <h2 className="font-black text-3xl text-center mt-5">Listado Pacientes</h2>
-        <p className="text-xl mt-5 mb-10 text-center">
-          Administra tus<span className="text-indigo-600 font-bold"> Pacientes y Citas</span>
-        </p>
 
-        <div className="m-5 bg-white shadow-md px-5 py-10 rounded-xl">
-            <p className="font-bold mb-3 text-gray-700 uppercase">
-              Nombre: <span className="font-normal normal-case">Dross</span>      
-            </p>
-            <p className="font-bold mb-3 text-gray-700 uppercase">
-              Propietario: <span className="font-normal normal-case">dario</span>      
-            </p>
-            <p className="font-bold mb-3 text-gray-700 uppercase">
-              email: <span className="font-normal normal-case">correo@correo.com</span>      
-            </p>
-            <p className="font-bold mb-3 text-gray-700 uppercase">
-              Fecha: <span className="font-normal normal-case">10/12/2023</span>      
-            </p>
-            <p className="font-bold mb-3 text-gray-700 uppercase">
-              Síntomas: <span className="font-normal normal-case">Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-              In commodi ex eos quibusdam delectus, fugiat odio voluptatibus voluptas tempore! Neque nostrum tempore 
-              fuga voluptatem doloribus architecto quos expedita? Illum, praesentium!</span>      
-            </p>
-        </div>
+        {pacientes && pacientes.length ? (
+          <>
+            <h2 className="font-black text-3xl text-center mt-5">Listado Pacientes</h2>
+              <p className="text-xl mt-5 mb-10 text-center">
+                Administra tus<span className="text-indigo-600 font-bold"> Pacientes y Citas</span>
+              </p>
 
-        <Paciente/>
-        <Paciente/>
-         
+          {pacientes.map( paciente =>(
+              <Paciente
+                key={paciente.id}
+                paciente={paciente}
+                setPaciente={setPaciente}
+              />
+          ))}
+
+          </>
+
+        ) : (
+          <>
+            <h2 className="font-black text-3xl text-center mt-5">No hay Pacientes</h2>
+              <p className="text-xl mt-5 mb-10 text-center">
+              Comienza Agregando Pacientes<span className="text-indigo-600 font-bold"> Y apareceran en este lugar</span>
+              </p>
+          </>
+        )}
+
+        
 
     </div>
   )
